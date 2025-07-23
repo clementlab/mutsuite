@@ -1,0 +1,25 @@
+[Simulation]
+depths: 30   # specifies the depths for the simulation, as a comma-separated list
+countMut: 5 # specifies the number of reads to be mutated, as a comma separated list
+addQual: 0       # specifies the addition of quality to all bases (0 means that original quality scores are used)
+reps: 1          # specifies the number of replicates of each depth/pctMut/addQual setting to run
+chr: chr11       # location of genome editing event
+loc: 836297      # location of genome editing event
+FDRtolerance: 10,100,1000 # window sizes for false positive indel calls
+reference: genomes/Homo_sapiens/UCSC/hg38/Sequence/BWAIndex/genome.fa        # location of fastq reference sequence, with bwa alignment files
+sourceBam: data/NA12878/HG001.GRCh38_full_plus_hs38d1_analysis_set_minus_alts.300x.bam # location of bam with unaltered reads
+unalteredBam: 10kbAroundCutsite.BWA.bam # file to write unaltered reads around cut site
+unalteredNamesortedBam: 10kbAroundCutsite.BWA.nameSort.bam # file to write unaltered reads around cut site (namesorted)
+simulateRange: 5000 # A simulated and control sample will be generated with reads within this many bp of 'chr:'loc' as specified above
+onlyInsertSpecificMutation: D1,D2
+mutSimScript: ../src/mutsuite/mutSim.py # location of mutSim.py script and module files.
+
+[Callers]
+gatk_env_command: conda run -n kc_gatk4 bash -c "
+lofreq_env_command: conda run -n kc_lofreq bash -c "
+pindel_env_command: conda run -n kc_pindel bash -c "
+somaticsniper_env_command: conda run -n kc_somaticSniper bash -c "
+strelka_env_command: conda run -n kc_strelka2 bash -c "
+vardict_env_command: conda run -n kc_vardict bash -c "
+varscan_env_command: conda run -n kc_varscan bash -c "
+caller_threads: 20
